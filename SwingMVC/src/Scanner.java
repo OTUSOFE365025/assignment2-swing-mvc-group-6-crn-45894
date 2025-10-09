@@ -26,8 +26,7 @@ public class Scanner {
         frame.setVisible(true);
 
         loadUPCs("assignment2-swing-mvc-group-6-crn-45894-master/SwingMVC/src/sampleProducts.txt");
-
-        scanButton.addActionListener(e -> generateUPC());
+		
     }
 
     // Method to read UPC codes from a specified file and store them in upcList.
