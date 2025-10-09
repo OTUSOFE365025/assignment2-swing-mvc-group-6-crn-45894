@@ -31,10 +31,13 @@ public class cashRegisterController {
     // Retrieves the last UPC code read from the text file. Adds the code's item
     // to the model and refreshes the UI.
     private void handleScan() {
+        scanner.generateUPC();
         String upc = scanner.getLastUPC();
+
         if (upc != null) {
             model.addItem(upc);
             view.updateDisplay(model.getScannedItems(), model.getSubtotal());
         }
     }
+
 }
