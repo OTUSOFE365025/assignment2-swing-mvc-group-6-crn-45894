@@ -1,70 +1,67 @@
-// This window emulates the scanning of an item. Every time the buttom is pressed
-// it will send a notification of a UPC code
-
 import java.awt.BorderLayout;
- 
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
-import javax.swing.JPanel;
-
+import javax.swing.*;
+import java.io.*;
+import java.util.*;
 
 public class Scanner {
-	// Scanner uses Swing framework to create a UPC code
-	 private JFrame frame;
-	 private JPanel scannerPanel;
-	 private JButton scanButton;
-	 
-	 public Scanner() {
-		  frame = new JFrame("Scanner");
-		  frame.getContentPane().setLayout(new BorderLayout());
-		  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		  frame.setSize(100, 100);
-		  frame.setLocation(300,50);
-		  frame.setVisible(true);
-		  
-		  
-		  // Create UI elements
-		  scanButton = new JButton("Scan");
-		  scannerPanel = new JPanel();
-		  
-		  // Add UI element to frame
-		  scannerPanel.add(scanButton);
-		  frame.getContentPane().add(scannerPanel);
-		  
-		  scanButton.addActionListener(e -> generateUPC());
-	 }
+    
+    private JFrame frame;
+    private JPanel scannerPanel;
+    private JButton scanButton;
+    private List<String> upcList = new ArrayList<>();
+    private Random rand = new Random();
+	private String lastUPC;
 
-	private int generateUPC() {
-		int upcCode = 12345; 
-		System.out.println(upcCode);
-		return upcCode;
+    public Scanner() {
+        frame = new JFrame("Scanner");
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(150, 100);
+        frame.setLocation(300, 50);
+
+        scanButton = new JButton("Scan");
+        scannerPanel = new JPanel();
+        scannerPanel.add(scanButton);
+        frame.getContentPane().add(scannerPanel);
+        frame.setVisible(true);
+
+        loadUPCs("assignment2-swing-mvc-group-6-crn-45894-master/SwingMVC/src/sampleProducts.txt");
+		
+    }
+
+    // Method to read UPC codes from a specified file and store them in upcList.
+    private void loadUPCs(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split("\\s+");
+                if (tokens.length > 0) {
+                    upcList.add(tokens[0]);
+                }
+            }
+            System.out.println("Loaded " + upcList.size() + " UPCs.");
+        } catch (IOException e) {
+            System.out.println("Error loading UPC file: " + e.getMessage());
+        }
+    }
+
+    // Method to choose a random code from upcList and store it in lastUPC for access
+	public int generateUPC() {
+		if (upcList.isEmpty()) {
+			System.out.println("No UPC codes loaded.");
+			return -1;
+		}
+		lastUPC = upcList.get(rand.nextInt(upcList.size()));
+		System.out.println("Scanned UPC: " + lastUPC);
+		return Integer.parseInt(lastUPC);
 	}
 
-	public JFrame getFrame() {
-		return frame;
+    // Method to let the controller access the most recently scanned UPC code.
+	public String getLastUPC() {
+    	return lastUPC;
 	}
 
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-
-	public JPanel getScannerPanel() {
-		return scannerPanel;
-	}
-
-	public void setScannerPanel(JPanel scannerPanel) {
-		this.scannerPanel = scannerPanel;
-	}
-
-	public JButton getScanButton() {
-		return scanButton;
-	}
-
-	public void setScanButton(JButton scanButton) {
-		this.scanButton = scanButton;
-	}	 
-	 
-
+    public JFrame getFrame() { return frame; }
+    public JPanel getScannerPanel() { return scannerPanel; }
+    public JButton getScanButton() { return scanButton; }
 }
