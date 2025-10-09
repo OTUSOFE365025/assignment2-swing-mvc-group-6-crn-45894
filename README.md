@@ -5,3 +5,10 @@ Swing is an API that provides libraries to help create GUI elements for Java pro
 
 
 The swing assignment code implements MVC by seperating the project into three different components, a model that manages the data, a view that displays this info to the user through the swing GUI, and controllers that handles user actions like scanning items. The project also use observers to notify the view of any changes which allows view to update itself in response. This is not exactly like the standard MVC pattern because the project does not directly communicate with the view this makes the layers less dependent on eachother unlike a standard MVC. 
+
+
+
+Member responsibilities
+Colton Task 1-4
+Nabhil Task 1-4
+Ammeer Task 1-4
