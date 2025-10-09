@@ -47,7 +47,6 @@ public class Scanner {
     }
 
     // Method to choose a random code from upcList and store it in lastUPC for access
-    // by the controller.
 	public int generateUPC() {
 		if (upcList.isEmpty()) {
 			System.out.println("No UPC codes loaded.");
