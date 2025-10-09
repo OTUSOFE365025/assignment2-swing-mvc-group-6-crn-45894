@@ -39,5 +39,4 @@ public class cashRegisterController {
             view.updateDisplay(model.getScannedItems(), model.getSubtotal());
         }
     }
-
 }
